@@ -7,4 +7,5 @@ package com.halipoto.springBootFintech.fintech.model;
  */
 public class CardAcct {
 
+    String cardAccountNumber;
 }
