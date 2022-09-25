@@ -1,5 +1,7 @@
 package com.halipoto.springBootFintech.fintech.model;
 
+import java.math.BigDecimal;
+
 /**
  * This class represents the credit card account
  * as it is expected by the Ui for display to the
@@ -7,5 +9,15 @@ package com.halipoto.springBootFintech.fintech.model;
  */
 public class CardAcct {
 
-    String cardAccountNumber;
+    String ccAccountNumber;
+    BigDecimal totalBalance;
+    BigDecimal lastStatementBalanceDue;
+    BigDecimal minimumPaymentAmountDue;
+    int gracePeriod;
+    String cardProcessor;
+    String rewards;
+    String autopayIndicator;
+    String chipCardIndicator;
+    String cardStatus;
+
 }
