@@ -22,6 +22,10 @@ public class AccountService {
 
         CardAcct cardAcct = new CardAcct();
 
+        return processCCAccount(cc, cardAcct);
+    }
+
+    private CardAcct processCCAccount(CcAccount cc, CardAcct cardAcct) {
         cardAcct.setCardProcessor(cc.getCardProcessorPartner());
         if (cc.isAutoPayenrolled())
             cardAcct.setAutopayIndicator("true");
@@ -39,4 +43,5 @@ public class AccountService {
 
         return cardAcct;
     }
+
 }
