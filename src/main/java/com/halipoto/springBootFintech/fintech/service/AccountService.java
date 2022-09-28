@@ -3,6 +3,10 @@ package com.halipoto.springBootFintech.fintech.service;
 import com.halipoto.springBootFintech.fintech.model.CardAcct;
 import com.halipoto.springBootFintech.fintech.model.CcAccount;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 public class AccountService {
 
     /**
@@ -25,6 +29,38 @@ public class AccountService {
         return processCCAccount(cc, cardAcct);
 
     }
+
+    public List<CardAcct> processCreditCardAccountListForUi(List<CcAccount> ccList) throws Exception {
+        CardAcct cardAcct = new CardAcct();
+        processCCAccountList(ccList);
+        return processCCAccountList(ccList);
+    }
+
+    /**
+     * This method does the processing for the card accounts
+     * that are returned from the backend in list format
+     *
+     *
+     * @param ccList
+     * @return CardAcct, card account object for ui consumption
+     * @throws Exception
+     * @author Mohammad Saleem Halipoto
+     */
+    private List<CardAcct> processCCAccountList(List<CcAccount> ccList) throws Exception {
+
+        Iterator<CcAccount> itr = ccList.iterator();
+        CcAccount ccAcct = new CcAccount();
+        List<CardAcct> cardAcctList = new ArrayList<CardAcct>();
+
+        while (itr.hasNext()) {
+            CardAcct cardAcct = new CardAcct();
+            ccAcct = itr.next();
+            validateCCAccount(ccAcct);
+            cardAcctList.add(processCCAccount(ccAcct, cardAcct));
+        }
+        return cardAcctList;
+    }
+
     private CardAcct processCCAccount(CcAccount cc, CardAcct cardAcct) {
         cardAcct.setCardProcessor(cc.getCardProcessorPartner());
         if (cc.isAutoPayenrolled())
