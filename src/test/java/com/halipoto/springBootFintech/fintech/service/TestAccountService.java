@@ -9,16 +9,20 @@ import org.mockito.InjectMocks;
 import static org.junit.Assert.*;
 
 import java.math.BigDecimal;
+import java.sql.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TestAccountService {
 
     //@InjectMocks //gives the class you want to test and names it service
     AccountService service = new AccountService(); //MAKE SURE U DO THIS?
-    CardAcct thunder = new CardAcct(); //now making dummy card account
+    CardAcct thunder = new CardAcct(); //now making dummy ui account
+    List<CardAcct> thunderList = new ArrayList<>(); // now making dummy ui account list
 
     @Test //needed for every test method
     public void accountProcessingTest () throws Exception {
-        CcAccount newCCAccount = new CcAccount(); //populating 'original' cc account
+        CcAccount newCCAccount = new CcAccount(); //instantiating ccaccount to put dummy backend data into
 
         newCCAccount.setCardAccountNumber("987654321");
         newCCAccount.setUserName("aaminahh");
@@ -33,7 +37,7 @@ public class TestAccountService {
         newCCAccount.setChipCard(true);
         newCCAccount.setCardStatus("available");
 
-        thunder = service.processCreditCardAccountForUi(newCCAccount); // processing thunder class
+        thunder = service.processCreditCardAccountForUi(newCCAccount); // service class now populates ui account object
 
         assertEquals("987654321", thunder.getCcAccountNumber()); // checking each thunder att
         assertEquals(BigDecimal.valueOf(239349.23), thunder.getTotalBalance());
@@ -47,7 +51,12 @@ public class TestAccountService {
         assertEquals("available", thunder.getCardStatus());
 
     }
+    @Test
+    public void accountListProcessingTest () throws Exception{
+        List<CcAccount> newCcAccountList = new ArrayList<CcAccount>();
 
+        thunderList = service.processCreditCardAccountListForUi();
+    }
     // TODO
     /** Write a new test method to see what your code does when one or more of the
      *  inputs are null or have empty String values (e.g. "")

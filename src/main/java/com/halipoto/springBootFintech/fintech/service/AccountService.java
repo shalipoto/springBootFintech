@@ -3,6 +3,10 @@ package com.halipoto.springBootFintech.fintech.service;
 import com.halipoto.springBootFintech.fintech.model.CardAcct;
 import com.halipoto.springBootFintech.fintech.model.CcAccount;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ListIterator;
+
 public class AccountService {
 
     /**
@@ -17,9 +21,9 @@ public class AccountService {
     // take the input CcAccount object, create values and add to the
     // newly created CardAcct object and return the object.
     // you are only required to populate the cardAcct object completely
-    public CardAcct processCreditCardAccountForUi(CcAccount cc) throws Exception {
+    public CardAcct processCreditCardAccountForUi(CcAccount cc) throws Exception { // creates cardAcct from backend to be sent to ui
 
-        CardAcct cardAcct = new CardAcct();
+        CardAcct cardAcct = new CardAcct(); //CardAcct is the variable type, cardAcct variable name, new CardAcct() = instantiation
 
         validateCCAccount(cc);
         return processCCAccount(cc, cardAcct);
@@ -42,6 +46,17 @@ public class AccountService {
         cardAcct.setLastStatementBalanceDue(cc.getLastStatementBalanceDue());
 
         return cardAcct;
+    }
+
+    public List<CardAcct> processCreditCardAccountListForUi(List<CcAccount> ccList){ // creates List<CardAcct> for multiple ccaccounts to send to UI
+        List<CardAcct> cardAcctList = new ArrayList<CardAcct>(); //cannot instantiate abstract classes or interfaces - arraylist is concrete
+
+        return processCCAccountList(ccList, cardAcctList);
+    }
+
+    private List<CardAcct> processCCAccountList(List<CcAccount> ccList, List<CardAcct> cardAcctList){
+        cardAcctList.listIterator();
+        return cardAcctList;
     }
 
     private void validateCCAccount(CcAccount cc) throws Exception { //throws exception for null or empty string
