@@ -4,8 +4,8 @@ import com.halipoto.springBootFintech.fintech.model.CardAcct;
 import com.halipoto.springBootFintech.fintech.model.CcAccount;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 public class AccountService {
 
@@ -21,14 +21,46 @@ public class AccountService {
     // take the input CcAccount object, create values and add to the
     // newly created CardAcct object and return the object.
     // you are only required to populate the cardAcct object completely
-    public CardAcct processCreditCardAccountForUi(CcAccount cc) throws Exception { // creates cardAcct from backend to be sent to ui
+    public CardAcct processCreditCardAccountForUi(CcAccount cc) throws Exception {
 
-        CardAcct cardAcct = new CardAcct(); //CardAcct is the variable type, cardAcct variable name, new CardAcct() = instantiation
+        CardAcct cardAcct = new CardAcct();
 
         validateCCAccount(cc);
         return processCCAccount(cc, cardAcct);
 
     }
+
+    public List<CardAcct> processCreditCardAccountListForUi(List<CcAccount> ccList) throws Exception {
+        CardAcct cardAcct = new CardAcct();
+        processCCAccountList(ccList);
+        return processCCAccountList(ccList);
+    }
+
+    /**
+     * This method does the processing for the card accounts
+     * that are returned from the backend in list format
+     *
+     *
+     * @param ccList
+     * @return CardAcct, card account object for ui consumption
+     * @throws Exception
+     * @author Mohammad Saleem Halipoto
+     */
+    private List<CardAcct> processCCAccountList(List<CcAccount> ccList) throws Exception {
+
+        Iterator<CcAccount> itr = ccList.iterator();
+        CcAccount ccAcct = new CcAccount();
+        List<CardAcct> cardAcctList = new ArrayList<CardAcct>();
+
+        while (itr.hasNext()) {
+            CardAcct cardAcct = new CardAcct();
+            ccAcct = itr.next();
+            validateCCAccount(ccAcct);
+            cardAcctList.add(processCCAccount(ccAcct, cardAcct));
+        }
+        return cardAcctList;
+    }
+
     private CardAcct processCCAccount(CcAccount cc, CardAcct cardAcct) {
         cardAcct.setCardProcessor(cc.getCardProcessorPartner());
         if (cc.isAutoPayenrolled())
@@ -46,17 +78,6 @@ public class AccountService {
         cardAcct.setLastStatementBalanceDue(cc.getLastStatementBalanceDue());
 
         return cardAcct;
-    }
-
-    public List<CardAcct> processCreditCardAccountListForUi(List<CcAccount> ccList){ // creates List<CardAcct> for multiple ccaccounts to send to UI
-        List<CardAcct> cardAcctList = new ArrayList<CardAcct>(); //cannot instantiate abstract classes or interfaces - arraylist is concrete
-
-        return processCCAccountList(ccList, cardAcctList);
-    }
-
-    private List<CardAcct> processCCAccountList(List<CcAccount> ccList, List<CardAcct> cardAcctList){
-        cardAcctList.listIterator();
-        return cardAcctList;
     }
 
     private void validateCCAccount(CcAccount cc) throws Exception { //throws exception for null or empty string

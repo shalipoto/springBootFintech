@@ -52,10 +52,62 @@ public class TestAccountService {
 
     }
     @Test
-    public void accountListProcessingTest () throws Exception{
-        List<CcAccount> newCcAccountList = new ArrayList<CcAccount>();
+    public void accountListProcessingTest () throws Exception{ // testing iterator for arraylist
+        CcAccount newCCAccount = new CcAccount(); //instantiating ccaccount to put dummy backend data into
 
-        thunderList = service.processCreditCardAccountListForUi();
+        newCCAccount.setCardAccountNumber("987654321");
+        newCCAccount.setUserName("aaminahh");
+        newCCAccount.setTotalBalanceDue(BigDecimal.valueOf(239349.23));
+        newCCAccount.setLastStatementBalanceDue(BigDecimal.valueOf(495.49));
+        newCCAccount.setMinimumPaymentDue(BigDecimal.valueOf(12.34));
+        newCCAccount.setGracePeriod(12);
+        newCCAccount.setCardProcessorPartner("Comerica");
+        newCCAccount.setProductCode(388595);
+        newCCAccount.setRewardsType("premium");
+        newCCAccount.setAutoPayenrolled(false);
+        newCCAccount.setChipCard(true);
+        newCCAccount.setCardStatus("available");
+
+        CcAccount newCCAccount1 = new CcAccount(); //instantiating ccaccount to put dummy backend data into
+
+        newCCAccount1.setCardAccountNumber("123456789");
+        newCCAccount1.setUserName("saleemh");
+        newCCAccount1.setTotalBalanceDue(BigDecimal.valueOf(12345.67));
+        newCCAccount1.setLastStatementBalanceDue(BigDecimal.valueOf(234.45));
+        newCCAccount1.setMinimumPaymentDue(BigDecimal.valueOf(65.43));
+        newCCAccount1.setGracePeriod(10);
+        newCCAccount1.setCardProcessorPartner("PayPal");
+        newCCAccount1.setProductCode(23456);
+        newCCAccount1.setRewardsType("ultra");
+        newCCAccount1.setAutoPayenrolled(true);
+        newCCAccount1.setChipCard(true);
+        newCCAccount1.setCardStatus("unavailable");
+
+        CcAccount newCCAccount2 = new CcAccount(); //instantiating ccaccount to put dummy backend data into
+
+        newCCAccount2.setCardAccountNumber("135792468");
+        newCCAccount2.setUserName("humzah");
+        newCCAccount2.setTotalBalanceDue(BigDecimal.valueOf(987.65));
+        newCCAccount2.setLastStatementBalanceDue(BigDecimal.valueOf(98765.43));
+        newCCAccount2.setMinimumPaymentDue(BigDecimal.valueOf(1232.54));
+        newCCAccount2.setGracePeriod(5);
+        newCCAccount2.setCardProcessorPartner("Whittier");
+        newCCAccount2.setProductCode(3985869);
+        newCCAccount2.setRewardsType("unleaded");
+        newCCAccount2.setAutoPayenrolled(false);
+        newCCAccount2.setChipCard(false);
+        newCCAccount2.setCardStatus("active");
+
+        List<CcAccount> newCcAccountList = new ArrayList<CcAccount>();
+        newCcAccountList.add(newCCAccount);
+        newCcAccountList.add(newCCAccount1);
+        newCcAccountList.add(newCCAccount2);
+
+        thunderList = service.processCreditCardAccountListForUi(newCcAccountList);
+
+        assertEquals("available", thunderList.get(0).getCardStatus()); // test iteration 0
+        assertEquals("true", thunderList.get(1).getAutopayIndicator()); // test iteration 1
+        assertEquals("active", thunderList.get(2).getCardStatus()); // test iteration 2
     }
     // TODO
     /** Write a new test method to see what your code does when one or more of the
